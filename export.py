@@ -16,8 +16,8 @@ def export_to_gcs(args):
     df = spark.sql(args.sql)
     if args.compute_hash_column:
         filtered_cols = [c for c in df.columns if c not in args.hash_ignore_columns]
-        neededCols = F.concat_ws("", *filteredCols)
-        df = df.withColumn(args.compute_hash_column, F.sha(neededCols))
+        needed_cols = F.concat_ws("", *filtered_cols)
+        df = df.withColumn(args.compute_hash_column, F.sha(needed_cols))
     
     if args.export_format == "csv":
         df.coalesce(1).write.format(args.export_format).option("compression", "gzip").option("header", "true").mode("overwrite").save(f"gs://{args.bucket}//{args.prefix}/")
