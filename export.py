@@ -35,7 +35,7 @@ if __name__ == '__main__':
     parser.add_argument('service_account_key_id', help='key with which to authorize the gcs')
     parser.add_argument('service_account_key', help='key with which to authorize the gcs')
     parser.add_argument('computed_hash_column', help="whether to compute a hash column", default='')
-    parser.add_argument('computed_hash_ignore_columns', help="ignore the passed columns from hash computation", default=[])
+    parser.add_argument('computed_hash_ignore_columns', help="ignore the passed columns from hash computation", nargs='*', default='')
     
 
     args = parser.parse_args()
