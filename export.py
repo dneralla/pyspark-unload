@@ -17,7 +17,7 @@ def export_to_gcs(args):
     if args.computed_hash_column:
         filtered_cols = [c for c in df.columns if c not in args.computed_hash_ignore_columns]
         needed_cols = F.concat_ws("", *filtered_cols)
-        df = df.withColumn(args.compute_hash_column, F.sha(needed_cols))
+        df = df.withColumn(args.computed_hash_column, F.sha(needed_cols))
     
     if args.export_format == "csv":
         df.coalesce(1).write.format(args.export_format).option("compression", "gzip").option("header", "true").mode("overwrite").save(f"gs://{args.bucket}//{args.prefix}/")
